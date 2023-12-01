@@ -2,13 +2,13 @@ import sys
 from Solutions.day1_solution import day_1
 
 day_map = {
-    # "1": day_1
+    "1": day_1
 }
 
 
 def run_aoc_day():
     day_to_run = sys.argv[1]
-    sample = f"Resources/day_{day_to_run}/sample.txt"
+    sample = f"Resources/day_{day_to_run}/sample_part2.txt"
     full = f"Resources/day_{day_to_run}/full.txt"
 
     try:
