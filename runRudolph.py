@@ -3,12 +3,14 @@ from Solutions.day1_solution import day_1_part1, day_1
 from Solutions.day2_solution import day_2
 from Solutions.day3_solution import day_3_part1, day_3_part2
 from Solutions.day4_solution import day_4_part1, day_4_part2
+from Solutions.day5_solution import day_5
 
 day_map = {
     "1": day_1,
     "2": day_2,
     "3": day_3_part2,
-    "4": day_4_part2
+    "4": day_4_part2,
+    "5": day_5
 }
 
 
