@@ -2,10 +2,18 @@ import re
 
 
 def calculate_score(hand_level, counter, all_hands, start_index=0):
+    print(hand_level)
+    print(f"INIT COUNTER: {counter}")
+    print(all_hands)
+    print(start_index)
     # print(hand_level.items())
+    # print(f"COUNTER: {counter}")
     # max_dict_value_tuple = max(hand_level.items(), key=lambda item: max(item[1][start_index]))
     values = list(hand_level.values())
+    print(values)
+    # print(hand_level.values)
     single_values = [item[start_index] for item in hand_level.values()]
+    print(single_values)
     # print("VAL")
     # print(values)
     keys = list(hand_level.keys())
@@ -21,18 +29,32 @@ def calculate_score(hand_level, counter, all_hands, start_index=0):
     # print(hand_level)
     if len(max_keys) == 1:
         # Remove highest order from dictionary
+        # print(hand_level)
+        # print(hand_level[max_dict_value_tuple[0]])
+        # print("REMOVING")
         del hand_level[max_dict_value_tuple[0]]
         # print(max_dict_value_tuple[0], counter)
+        print(all_hands[max_dict_value_tuple[0]], counter)
         all_hands[max_dict_value_tuple[0]] = all_hands[max_dict_value_tuple[0]] * counter
+        # counter -= 1
         # print(all_hands)
-        counter -= 1
+        # print(hand_level)
         if len(hand_level) == 0:
+            print("hand_level == 0")
+            # Found last one in list for this group
+            # print(f"COUNTERZ ONE: {counter}")
+            # all_hands[max_dict_value_tuple[0]] = all_hands[max_dict_value_tuple[0]] * counter
             return 1
         else:
-            return counter - calculate_score(hand_level, counter, all_hands, start_index-1)
+            print("Only one max but still have hands")
+            # on second to last one
+            print(f"START IND: {start_index}")
+            # print(f"COUNTERZ: {counter}")
+            return counter - calculate_score(hand_level, counter-1, all_hands, start_index)
     else:
+        print("need to try another card")
         work_with_subset = {k: hand_level[k] for k in max_keys}
-        return counter - calculate_score(work_with_subset, counter, all_hands, start_index+1)
+        return counter - calculate_score(work_with_subset, counter-1, all_hands, start_index+1)
 
 # Assuming each hand is unique
 
@@ -64,7 +86,7 @@ def day_7(sample_file_path, full_file_path):
     high_card = {}
     all_hands = {}
 
-    with open(full_file_path, 'r') as sample_f:
+    with open(sample_file_path, 'r') as sample_f:
         for line in sample_f.readlines():
             line = line.strip()
             split_line = line.split(' ')
@@ -100,26 +122,40 @@ def day_7(sample_file_path, full_file_path):
                 high_card[split_line[0]] = [scoring_map[split_line[0][0]], scoring_map[split_line[0][1]], scoring_map[split_line[0][2]], scoring_map[split_line[0][3]], scoring_map[split_line[0][4]]]
 
     print(all_hands)
-    print(counter)
+    # print(counter)
     if len(five_of_kind) > 0:
+        print("FIVE OF KIND")
+        print(all_hands)
+        print(counter)
         counter = calculate_score(five_of_kind, counter, all_hands)
-        print(counter)
     if len(four_of_kind) > 0:
+        print("FOUR OF KIND")
+        print(all_hands)
+        print(counter)
         counter = calculate_score(four_of_kind, counter, all_hands)
-        print(counter)
     if len(full_house) > 0:
+        print("FULL HOUSE")
+        print(all_hands)
+        print(counter)
         counter = calculate_score(full_house, counter, all_hands)
-        print(counter)
     if len(three_of_kind) > 0:
+        print("THREE OF KIND")
+        print(all_hands)
+        print(counter)
         counter = calculate_score(three_of_kind, counter, all_hands)
-        print(counter)
     if len(two_pair) > 0:
+        print("TWO PAIR")
+        print(all_hands)
+        print(counter)
         counter = calculate_score(two_pair, counter, all_hands)
-        print(counter)
     if len(one_pair) > 0:
-        counter = calculate_score(one_pair, counter, all_hands)
+        print("ONE PAIR")
+        print(all_hands)
         print(counter)
+        counter = calculate_score(one_pair, counter, all_hands)
     if len(high_card) > 0:
+        print("HIGH")
+        print(all_hands)
         counter = calculate_score(high_card, counter, all_hands)
 
     return sum(all_hands.values())
